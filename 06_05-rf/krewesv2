@@ -9,6 +9,4 @@ KREWES = {
     'endymion': ['JASON', 'DEAN', 'MADDY', 'SAQIF', 'CINDY', 'YI LING', 'RUOSHUI', 'FB', 'MATTHEW', 'MAY', 'ERIN', 'MEIRU']
 }
 
-s = input("orpheus, rex, or endymion: ").lower() #Which team
-#Takes random value from list of team 
-print(random.choice(KREWES[s]))
+print(random.choice(KREWES[input("orpheus, rex, or endymion: ").lower()]))
