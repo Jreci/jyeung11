@@ -1,0 +1,31 @@
+Jessica Yeung
+SoftDev
+LJ00: Le Voyage de Learnination avec Mongo, Première Phase
+2020-10-29
+
+Database: Structured way to store and access data
+NoSQL database: Database not organized in tables, rows, or columns
+MongoDB is a NoSQL documentDB
+
+Document: Way to organize and store data as a set of field-value pairs
+Ex: 
+{
+<field> : <value>,
+<field> : <value>,
+.
+.
+.
+}
+
+Collection: Organized store of documents
+
+Cluster: Group of servers that store your data
+Instance: Single machine, locally or in cloud, running a certain software
+Replica Set - A few connected machines that store the same data to ensure that
+if something happens to one of the machines the data remains intact
+
+IDE: Interactive Development Environment
+
+To connect:
+mongo "mongodb+srv://sandbox.uxuxt.mongodb.net/<dbname>" --username m001-student
+PW: m001-mongodb-basics
