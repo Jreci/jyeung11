@@ -1,0 +1,81 @@
+Jessica Yeung
+SoftDev
+LJ00: Le Voyage de Learnination avec Mongo, Première Phase
+2020-10-29
+
+In Mongo Shell, you view and update documents in JSON
+
+JSON: JavaScript Standard Object Notation
+Format:
+Start and end with curly braces {}
+Separate each key and value with a colon :
+Separate each key:value pair with a comma ,
+"keys" must be surrounded by quotation marks ""
+-> In MongoDB "keys" are called "fields"
+
+Pros of JSON: Friendly, readable, familiar
+Cons of JSON: Text-based (text parsing is slow), space-consuming, limited datatypes
+
+BSON: Binary JSON
+-> Bridges gap between binary representation and JSON format
+-> Optimized for speed, space, and flexibility (JSON's cons)
+-> Has additional datatypes to faciliate communication between database and application
+
+
+URI = Uniform Resource Identifier
+	srv string is used to establish secure connection
+	between your application and MongoDB instance
+mongodb+srv://user:password@clusterURI.mongodb.net/database
+
+Import & Export:
+-> JSON: 
+	1) mongoimport
+		--uri "<Atlas Cluster URI>"
+		--drop=<filename>.json
+	2) mongoexport
+		--uri "<Atlas Cluster URI>"
+		--collection=<collection name>
+		--out=<filename>.json
+-> BSON: 
+	1) mongorestore
+		--uri "<Atlas Cluster URI>"
+		--drop dump
+	2) mongodump
+		--uri "<Atlas Cluster URI>"
+
+mongodump --uri "mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies"
+
+mongoexport --uri="mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies" --collection=sales --out=sales.json
+
+mongorestore --uri "mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies"  --drop dump
+
+mongoimport --uri="mongodb+srv://<your username>:<your password>@<your cluster>.mongodb.net/sample_supplies" --drop sales.json
+
+
+Namespace - The concatenation of the database name and collection name
+
+
+Connecting to Atlas cluster:
+mongo "mongodb+srv://sandbox.uxuxt.mongodb.net/<dbname>" --username m001-student
+mongo "mongodb+srv://<username>:<password>@<cluster>.mongodb.net/admin"
+
+
+Querying in mongoshell example:
+show dbs
+
+use sample_training
+
+show collections
+
+db.zips.find({"state": "NY"})
+
+db.zips.find({"state": "NY"}).count()
+
+db.zips.find({"state": "NY", "city": "ALBANY"})
+
+db.zips.find({"state": "NY", "city": "ALBANY"}).pretty()
+
+
+it: iterates through a cursor
+cursor: a pointer to a result set of a query
+pointer: a direct address of the memory location
