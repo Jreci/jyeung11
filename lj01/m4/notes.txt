@@ -1,1 +1,92 @@
-Placeholder
+Team Majessian (Jessica Yeung, Mary Shang, Ian Chenadamczyk)
+SoftDev
+LJ01: Le Voyage de Learnination avec Mongo, Deuxième Phase
+2020-11-12
+
+>> QUERY OPERATORS: COMPARISON <<
+
+Query operators provide additional ways to locate data within the database
+Comparison operators specifically allow us to find data within a certain range
+
+$ has multiple uses:
+Precedes MQL operators
+Precedes Aggregation pipeline stages
+Allows access to field values
+
+Comparison operators
+$eq: equal to (used as default operator if operator not specified)
+$ne: not equal to
+$gt: greater than
+$lt: less than
+$gte: greater than or equal to
+$lte: less than or equal to
+
+{<field>: {<operator>: <value>}} 
+{"tripduration": {"$lte":60}}
+
+>> QUERY OPERATORS: LOGIC <<
+
+Logic operators:
+$and: match all of the specified query clauses 
+($and is used by default, should be used for multiples of same operator in single query)
+$or: match if at least one of the query clauses is matched
+$nor: fail to match both given clauses
+{<operator>: [{statement1},{statement2},...]}
+{"$and": [{"$or": [{"dst_airport": "KZN"},{"src_airport": "KZN"}]},
+          {"$or": [{"airplane": "CR2" },{"airplane": "A81"}]}
+         ]}
+
+$not: negates the query requirement
+{<field>: {"$not": {operator-expression}}
+db.inspections.find({"$not": {"result": "Out of Business"}}) -> INCORRECT
+db.inspections.find({"result": {"$not": {"$eq": "Out of Business"}}}) -> INEFFICIENT
+db.inspections.find({"result": {"$ne": "Out of Business"}}) -> BEST
+
+>> EXPRESSIVE QUERY OPERATOR <<
+
+$expr allows the use of aggregation expressions within the query language
+{$expr: {<expression>}}
+$expr allows us to use variables and conditional statements within a document
+{"$expr": {<operator>: [<$field>,<$field>]}}
+
+Aggregation syntax: {<operator>: {<field>,<value>}}
+
+>> ARRAY OPERATORS <<
+
+$push 
+Allows us to add an element to an array
+Turns a field into an array field if it was previously a different type
+
+$size restricts array length
+$all returns those that have array elements regardless of order
+{<array field> {"$size": <number>, "$all": [...]}}
+
+>> ARRAY OPERATORS AND PROJECTION <<
+
+Projection:
+db.<collection>.find({<query>}, {<projection>})
+1 - include the field
+0 - exclude the field
+Use only 1s or 0s (exception is _id values which are included if not specified)
+db.<collection>.find({<query>}, {<field1>: 1, <field2>: 1})
+
+$elemMatch (for results in a subdocument)
+In a projection ex:
+db.<collection>.find(<query>, <field>: {"$elemMatch": {<field>: {<operator>:<value>}}})
+In a query ex:
+db.<collection>.find({<field>: {"$elemMatch": {<field>:<value>}}}
+
+>> QUERYING ARRAYS AND SUBDOCUMENTS <<
+
+Dot notation:
+<top field>.<lower field>.<even lower field>...
+<array field>.<index of array element>
+
+
+mongo "mongodb+srv://sandbox.uxuxt.mongodb.net/<dbname>" --username m001-student
+PW: m001-mongodb-basics
+
+NOTE: I could not for the life of me understand why I kept getting Lab 2 in Logic Operators
+wrong and kept rechanging my query until I received a fail in that and compared the
+answer with my own CHARACTER BY CHARACTER because they looked exactly the same. Then I 
+realized I spelt "category" as "catgeory". :)
