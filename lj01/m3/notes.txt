@@ -58,12 +58,15 @@ db.<collection>.updateMany() -> Updates all documents that match query
 .update---(<query>, {"$set": {"<field>": "<new value>", ...}}
 .update---(<query>, {"$push": {"<field>": "<value>", ...}} Adds new field:value
 
+Update operators enable us to modify data in the database ($inc, $set, $unset, $push)
+
 For documents inside documents:
 .update---(<query>, { $---": {"<field>": {"<field>": "<value>", ...}}}
 
 If field does not exist during update, it is created.
 
 >> DELETING DOCUMENTS AND COLLECTIONS <<
+
 db.<collection>.deleteOne()
 db.<collection>.deleteMany()
 
