@@ -1,0 +1,77 @@
+Team Majessian (Jessica Yeung, Mary Shang, Ian Chenadamczyk)
+SoftDev
+LJ01: Le Voyage de Learnination avec Mongo, Deuxième Phase
+2020-11-12
+
+>> OBJECTID <<
+
+Each document inside a collection requires a unique "_id"
+ObjectId() is the default value for the "_id" field
+It is inefficient to store documents that have everything or nothing in common.
+Keep document format consistent.
+
+>> INSERT() AND ERRORS <<
+
+To insert documents by the mongo shell
+	Import by collection
+		mongoimport --uri<...> --drop<collection>
+		mongoimport --uri="mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<collection>" sales.json
+	Insert single document
+		db.<collection>.insert({...})
+	
+db.<collection>.findOne() -> Grabs random document that matches query
+db.<collection>.find({"_id": 1}) -> Find documents with _id: 1 (query)
+
+Duplicate key error -> Cannot insert document with existing _id value of a document in collection
+
+_id value is added automatically upon insertion if no value is given)
+
+>> INSERT ORDER <<
+
+The moment there is a duplicate key error in a default ordered insert, 
+the insert operation halts even if there are docs with unique _ids
+
+To insert multiple documents:
+db.<collection>.insert([{...}, {...}, {...}])
+{"test": 1} -> _id value automatically generated
+{"_id": 1, "test": 1} -> _id value already specified
+
+db.<collection>.insert([{...}, {...}, {...}], {"ordered": false})
+All documents with unique _id values will be inserted
+All documents with duplicated _id values will produce their own error
+
+If you insert a document into a collection that doesn't exist,
+the collection will be created and the document inserted.
+
+"use <database>" to switch databases
+If <database> does not exist and no collection/document is added,
+it will not exist if you switch out of the database.
+
+"show dbs" to view all available databases.
+"show collections" to view all collections in active db.
+
+>> UPDATING DOCUMENTS <<
+
+db.<collection>.updateOne() -> Updates first document to match query
+db.<collection>.updateMany() -> Updates all documents that match query
+.update---(<query>, {"$inc": {"<field>": "<increment value>", ...}}
+.update---(<query>, {"$set": {"<field>": "<new value>", ...}}
+.update---(<query>, {"$push": {"<field>": "<value>", ...}} Adds new field:value
+
+For documents inside documents:
+.update---(<query>, { $---": {"<field>": {"<field>": "<value>", ...}}}
+
+If field does not exist during update, it is created.
+
+>> DELETING DOCUMENTS AND COLLECTIONS <<
+db.<collection>.deleteOne()
+db.<collection>.deleteMany()
+
+mongoimport --uri<...> --drop<collection>
+db.<collection>.drop()
+
+Removing all the collections in a database removes the database.
+
+
+mongo "mongodb+srv://sandbox.uxuxt.mongodb.net/<dbname>" --username m001-student
+PW: m001-mongodb-basics
