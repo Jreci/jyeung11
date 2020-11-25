@@ -1,0 +1,39 @@
+The Blob Seizure Crew (Jessica Yeung, Helena Williams, Ishita Gupta)
+SoftDev
+LJ02: Le Voyage de Learnination avec Mongo, Troisième Phase
+2020-11-25
+
+>> DATA EXPLORER FEATURES <<
+
+Tabs: 
+Find
+Indexes (what indexes exist, how often used, when created, and who created)
+Schema Anti-Pattern (provides advice about data model with enough queries)
+Aggregation (builds aggregation pipelines and shows how data is transformed in stages)
+	Shows syntax for each aggregation stage
+	Shows sample of data for each stage in pipeline
+	Can export pipeline to a programming language
+Search Indexes 
+
+>> ATLAS PRODUCTS <<
+
+Atlas data explorer
+Organization: Grouping for projects and teams (and billing)
+	Projects
+		Teams (each have different access)
+		Clusters (must have unique names within project)
+Realm allows for integration of MongoDB Atlas data into an application
+	As well services to simply creating an application
+Charts allows for dynamic data visualizations
+	Shows aggregation pipeline
+
+>> MONGODB COMPASS <<
+
+Compass is a Graphical User Interface that provides a lot of support 
+in querying, visualizing, and analyzing your data.
+The Explain Plan tab is particular helpful for explaining and showing 
+a Query Performance Summary to understand which indexes are most efficient
+
+
+mongo "mongodb+srv://sandbox.uxuxt.mongodb.net/<dbname>" --username m001-student
+PW: m001-mongodb-basics
