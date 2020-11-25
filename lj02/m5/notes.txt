@@ -1,0 +1,103 @@
+The Blob Seizure Crew (Jessica Yeung, Helena Williams, Ishita Gupta)
+SoftDev
+LJ02: Le Voyage de Learnination avec Mongo, Troisième Phase
+2020-11-25
+
+>> AGGREGATION FRAMEWORK <<
+
+Aggregation framework is another way to query data in MongoDB
+Allows you to compute and reshape data while MQL only can filter and update data.
+ 
+db.<collection>.find(
+		{"amenities": "Wifi"},
+		{"price": 1, "address": 1, "_id": 0}).pretty()
+
+db.<collection>.aggregate([
+		{$match: {"amenities": "Wifi"}},
+		{$project: {"price": 1, "address": 1, "_id": 0}}])
+-> Order matters! 
+
+$group -> an operator that siphons incoming data into multiple distinct reservoirs
+{ $group: {
+	_id: <expression>, // Group by expression
+	<field1>: {<accumulator1> : <expression1>},
+	... }}
+
+db.listingsAndReviews.aggregate([
+        { "$project": { "address": 1, "_id": 0 }},
+        { "$group": { "_id": "$address.country",
+        	"count": { "$sum": 1 } } } 
+	//For each doc in certain $address.country, add 1 to that group
+        ])
+
+{"$group": {
+	"_id": "category",          //Does doc have a "category" field?
+	"total": {{"$sum":"$price"} //Add value of "$price" to "total" of group (each category) 
+	}} 
+====
+{"category": "fish", "price":5}
+{"category": "meat", "price":25} 
+{"category": "fish", "price":7}
+====
+{{"_id": "fish", "total":12},
+ {"_id": "meat", "total":25}}
+
+Sort by group example:
+db.listingsAndReviews.aggregate([{ "$project": { "room_type": 1, "_id": 0 }},
+                                 { "$group": { "_id": "$room_type" } } ])
+
+>> SORT AND LIMIT <<
+
+Cursor methods apply to the results set that are in the cursor
+sort(), limit(), pretty(), count()
+
+db.<collection>.find().sort({<field1>: #, <field2>: #}).limit(#).pretty()
+Finds first # documents
+1 -> Sorts lowest to highest
+-1 -> Sorts highest to lowest
+Does not have to be all -1s and 1s
+
+>> INDEXES <<
+
+Index: Special data structure that stores small portion of collection's
+data set in an easy to traverse form
+Sorting is time consuming, indexes are time efficient!
+
+Single field index
+db.<collection>.createIndex({<field>: 1/-1})
+db.<collection>.find({<field>: <value>}) is much faster!
+
+Compound index
+db.<collection>.createIndex({<field1>: 1/-1, <field2>: 1/-1})
+-> Will first organize by field 1, then by field 2
+
+>> DATA MODELING <<
+
+Data modeling: Organize fields in a document for best performance
+Rule: Data is stored in the way that it is used
+Data that is used together should be stored together
+
+>> UPSERT: UPDATE OR INSERT <<
+
+Everything in MQL used to located a document in a collection can
+also be used to modify the document
+
+db.<collection>.updateOne({<query>}, {<update>})
+
+Upsert is a hybrid of update and insert and should only be used when needed
+db.<collection>.updateOne({<query>}, {<update>}, {"upsert":true})
+Upsert is set to false as default
+If true:
+	Update will happen if documents that match query exist
+	Insert will happen if no documents that match query exist
+
+Ex:
+db.iot.updateOne({ "sensor": r.sensor, "date": r.date,
+                   "valcount": { "$lt": 48 } },
+                         { "$push": { "readings": { "v": r.value, "t": r.time } },
+                        "$inc": { "valcount": 1, "total": r.value } },
+                 { "upsert": true })
+
+
+mongo "mongodb+srv://sandbox.uxuxt.mongodb.net/<dbname>" --username m001-student
+PW: m001-mongodb-basics
