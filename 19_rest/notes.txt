@@ -1,4 +1,4 @@
-urllib2 cannot be import, instead replace import urllib2 with
+urllib2 cannot be imported, instead replace import urllib2 with
 "import urllib.request as urllib2"
 
 Remember to use jinja! :)
