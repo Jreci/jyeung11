@@ -1,0 +1,6 @@
+urllib2 cannot be import, instead replace import urllib2 with
+"import urllib.request as urllib2"
+
+Remember to use jinja! :)
+
+Only key must be in key_nasa.txt, concatenate the rest of the http request
