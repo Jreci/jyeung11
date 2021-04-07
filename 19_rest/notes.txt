@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 Team Cosmic Stardust- Victoria Gao, Jessica Yeung, Andrew Jiang
 SoftDev
 K19 -- A RESTful Journey Skyward
 2020-04-05
+=======
+urllib2 cannot be imported, instead replace import urllib2 with
+"import urllib.request as urllib2"
+>>>>>>> 3f36ae482ab37f94f8bb8be1b6c1998d3ab75e53
 
 -Making a simple HTTP request using the key yields a JSON object containing info such as date, explanation, and img urls.
 -We inported urllib.request instead of urllib2 due to error messages stating that urllib2 module does not exist.
